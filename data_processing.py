@@ -1,3 +1,4 @@
+
 def print_stats(data: list[dict]) -> None:
     """
     Accepts a dataset stored as a list of dictionaries.
@@ -10,11 +11,21 @@ def print_stats(data: list[dict]) -> None:
 
     for column in columns:
         # determine if this is a text or numeric column
-        if type(data[0][column]) == float:
+        if type(data[0][column]) == float or type(data[0][column]) == int:
             # process this as a numeric column
-            pass # not in this partial solution :)
+            total = 0
+            count = 0
+            for row in data:
+                total += row[column]
+                count += 1
 
-        else:  # this is a text column
+
+                
+
+            average = total / count if count > 0 else 0
+            
+            print(f"average value for {column}: {average}")
+        else:  
             
             # build a dict that counts number of times we've seen each value
             # within this column
