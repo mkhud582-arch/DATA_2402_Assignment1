@@ -44,7 +44,7 @@ def load_from_html(filename: str) -> list[dict]:
                 # convert to float if the value is a number
                 try:
                     this_value = float(this_value)
-                except Exception:
+                except ValueError:
                     pass
 
                 this_row_dict[this_column] = this_value
@@ -78,6 +78,9 @@ def load_from_CSV(filename: str) -> list[dict]: # [{k:v}]
             strip_value = value.strip()
             split_value = strip_value.split(',') # separate the row of values from row 2 and onwards into individual parts such as 001234,Alice,Sales,25.0 --> [001234, Alice, Sales, 25.0]
 
+            if strip_value == "":
+                continue
+
             row_dict = {}
             for i in range(len(columns)): # loop through each column that contain the header and the values
                 current_column = columns[i] # this will be like the key in the dictionary to access by the column header (Key: Name)
@@ -94,15 +97,22 @@ def load_from_CSV(filename: str) -> list[dict]: # [{k:v}]
            
     return all_rows
 
-result = load_from_CSV("census_dataset.txt")
-print(result[:3])
-        # try:
-            
-        # except AttributeError:
-        #     raise Exception(" “Error, data must be in valid CSV or HTML format”")
 
-    
-       
+def load_data(filename):
+    try:
+        CSV_result = load_from_CSV(filename)
+        return CSV_result
+    except ValueError: 
+        pass
+        # try:
+        #     HTML_result = load_from_html(filename)
+        #     return HTML_result
+        # except AttributeError:
+        #     raise Exception("Error, data must be in valid CSV or HTML format")
+
+
+result = load_from_CSV("/home/magidk1/Desktop/DATA 2402 Assignments/Assignment 1/Data/vote.arff")
+print(result[:3])
 
         
 
